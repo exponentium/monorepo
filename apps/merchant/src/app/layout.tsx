@@ -3,6 +3,10 @@ import { Metadata } from "next"
 import { Toaster } from "sonner"
 import { DynamicProvider } from "@spheroid/dynamic"
 
+import Navbar from "@/components/layout/Navbar"
+import SideMenu from "@/components/layout/SideMenu"
+import { SideMenuProvider } from "@/context/SideMenuContext"
+
 import "@spheroid/styles/src/styles/global.css"
 
 export const metadata: Metadata = {
@@ -27,7 +31,15 @@ const RootLayout = ({ children }: Readonly<IChildren>) => {
           theme="system"
         />
         <DynamicProvider>
-          <>{children}</>
+          <SideMenuProvider>
+            <>
+              <Navbar />
+              <div className="flex h-full flex-row">
+                <SideMenu />
+                {children}
+              </div>
+            </>
+          </SideMenuProvider>
         </DynamicProvider>
       </body>
     </html>

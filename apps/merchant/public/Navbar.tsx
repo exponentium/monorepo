@@ -6,9 +6,10 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { GiHamburgerMenu } from "react-icons/gi"
-import { Button } from "@spheroid/ui"
 
 import { SideMenuContext } from "@/context/SideMenuContext"
+
+import Button from "../ui/Button"
 
 const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -45,8 +46,7 @@ const Navbar = () => {
         <div className="hidden items-center space-x-6 md:flex">
           <Button
             onClick={() => (window.location.href = "/demo")}
-            variant={"primary"}
-            className="px-4"
+            type="primary"
           >
             Login
           </Button>
