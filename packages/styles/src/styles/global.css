@@ -4,3 +4,5 @@
 @import "./tailwind/base.css";
 @import "./tailwind/components.css";
 @import "./tailwind/utilities.css";
+
+@import "./animations/glowing-card.css";
