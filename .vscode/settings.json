@@ -1,0 +1,16 @@
+{
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "editor.formatOnType": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.tabSize": 4,
+  "editor.detectIndentation": false,
+  "files.autoSave": "afterDelay",
+  "prettier.enable": true,
+  "eslint.enable": true,
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

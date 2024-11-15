@@ -1,0 +1,45 @@
+name: 🆘 Help Request
+description: Request help or ask questions here
+title: "[HELP]: "
+labels: ["help"]
+# assignees: [""]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reaching out for help! 🙌
+        Before submitting, please ensure your question isn't already answered in the documentation or in any open/closed issues. 🤓
+
+  - type: textarea
+    id: question-description
+    attributes:
+      label: Description of Your Question
+      description: Provide a clear and concise description of your issue or question.
+    validations:
+      required: true
+
+  - type: textarea
+    id: context-and-steps
+    attributes:
+      label: Context and Steps to Reproduce
+      description: Provide context and any steps you’ve taken that led to your question or issue.
+      placeholder: |
+        1. Tried to do '...'
+        2. Expected result '...'
+        3. Actual result '...'
+    validations:
+      required: true
+
+  - type: textarea
+    id: attempted-solutions
+    attributes:
+      label: Attempted Solutions
+      description: |
+        Let us know if you've tried any solutions or workarounds. This helps us provide better assistance.
+
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: Additional Information
+      description: |
+        Any other details you think might be relevant, such as environment settings, previous issues, or references to documentation.
