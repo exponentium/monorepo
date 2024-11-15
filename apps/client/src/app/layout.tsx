@@ -1,6 +1,7 @@
 import React from "react"
 import { Metadata } from "next"
 import { Toaster } from "sonner"
+import { Providers as CoinbaseProvider } from "@spheroid/coinbase"
 import { DynamicProvider } from "@spheroid/dynamic"
 
 import "@spheroid/styles/src/styles/global.css"
@@ -26,9 +27,11 @@ const RootLayout = ({ children }: Readonly<IChildren>) => {
           position="bottom-right"
           theme="system"
         />
-        <DynamicProvider>
-          <>{children}</>
-        </DynamicProvider>
+        <CoinbaseProvider>
+          <DynamicProvider>
+            <>{children}</>
+          </DynamicProvider>
+        </CoinbaseProvider>
       </body>
     </html>
   )

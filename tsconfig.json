@@ -20,6 +20,6 @@
     "isolatedModules": true,
     "paths": {}
   },
-  "include": ["apps/*/src", "apps/*/test", "packages/*/src", "packages/*/test"],
+  "include": ["apps/*/src", "apps/*/test", "packages/*/src", "packages/*/test", "packages/coinbase/next.config.ts"],
   "exclude": ["node_modules", "**/dist", "**/build"]
 }
