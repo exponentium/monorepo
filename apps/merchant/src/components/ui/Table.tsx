@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react"
-import { cva, VariantProps } from "class-variance-authority"
 
 export type Column<T> = {
   key: keyof T
@@ -10,24 +9,13 @@ export type Column<T> = {
 type TableProps<T> = {
   columns: Column<T>[]
   data: T[]
+  className?: string
 }
 
-const tableClasses = cva("min-w-full border-collapse border bg-white", {
-  variants: {
-    striped: {
-      true: "even:bg-gray-50",
-      false: "",
-    },
-  },
-  defaultVariants: {
-    striped: true,
-  },
-})
-
-const Table = <T extends object>({ columns, data }: TableProps<T> & VariantProps<typeof tableClasses>) => {
+const Table = <T extends object>({ columns, data, className }: TableProps<T>) => {
   return (
-    <div className={`w-full overflow-x-auto rounded-md shadow-lg`}>
-      <table className={tableClasses()}>
+    <div className={`w-full overflow-x-auto rounded-md shadow-lg ${className || ""}`}>
+      <table className="min-w-full border-collapse border border-gray-200 bg-white">
         <thead className="bg-gray-100">
           <tr>
             {columns.map((column, index) => (
@@ -54,11 +42,11 @@ const Table = <T extends object>({ columns, data }: TableProps<T> & VariantProps
             data.map((row, rowIndex) => (
               <tr
                 key={rowIndex}
-                className={tableClasses({ striped: true })}
+                className="even:bg-gray-50"
               >
                 {columns.map((column, colIndex) => {
                   const cellValue = row[column.key]
-                  const renderedValue = column.render ? column.render(cellValue, row) : String(cellValue)
+                  const renderedValue = column.render ? column.render(cellValue, row) : String(cellValue) // Convert non-renderable types to string
 
                   return (
                     <td
