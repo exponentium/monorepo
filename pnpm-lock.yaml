@@ -265,6 +265,172 @@ importers:
         specifier: ^5
         version: 5.6.3
 
+  apps/merchant:
+    dependencies:
+      '@commitlint/cli':
+        specifier: ^19.5.0
+        version: 19.5.0(@types/node@22.9.0)(typescript@5.6.3)
+      '@hookform/resolvers':
+        specifier: ^3.9.0
+        version: 3.9.1(react-hook-form@7.53.2(react@19.0.0-rc-65a56d0e-20241020))
+      '@radix-ui/react-accordion':
+        specifier: ^1.2.1
+        version: 1.2.1(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      '@radix-ui/react-dialog':
+        specifier: ^1.1.2
+        version: 1.1.2(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      '@radix-ui/react-icons':
+        specifier: ^1.3.0
+        version: 1.3.2(react@19.0.0-rc-65a56d0e-20241020)
+      '@radix-ui/react-label':
+        specifier: ^2.1.0
+        version: 2.1.0(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      '@radix-ui/react-popover':
+        specifier: ^1.1.2
+        version: 1.1.2(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      '@radix-ui/react-progress':
+        specifier: ^1.1.0
+        version: 1.1.0(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      '@radix-ui/react-select':
+        specifier: ^2.1.2
+        version: 2.1.2(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      '@radix-ui/react-separator':
+        specifier: ^1.1.0
+        version: 1.1.0(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      '@radix-ui/react-slot':
+        specifier: ^1.1.0
+        version: 1.1.0(@types/react@18.3.12)(react@19.0.0-rc-65a56d0e-20241020)
+      '@radix-ui/react-tabs':
+        specifier: ^1.1.1
+        version: 1.1.1(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      '@spheroid/configuration':
+        specifier: workspace:*
+        version: link:../../packages/configuration
+      '@spheroid/styles':
+        specifier: workspace:*
+        version: link:../../packages/styles
+      '@t3-oss/env-nextjs':
+        specifier: ^0.11.1
+        version: 0.11.1(typescript@5.6.3)(zod@3.23.8)
+      '@tanstack/react-query':
+        specifier: ^4.35.3
+        version: 4.36.1(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react-native@0.74.0(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      '@trpc/client':
+        specifier: ^10.45.2
+        version: 10.45.2(@trpc/server@10.45.2)
+      '@trpc/next':
+        specifier: ^10.45.2
+        version: 10.45.2(7s2lp7t767j4r6bguzr6k4rnee)
+      '@trpc/react-query':
+        specifier: ^10.45.2
+        version: 10.45.2(@tanstack/react-query@4.36.1(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react-native@0.74.0(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      '@trpc/server':
+        specifier: ^10.45.2
+        version: 10.45.2
+      chain-registry:
+        specifier: ^1.69.12
+        version: 1.69.33
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      cmdk:
+        specifier: 1.0.0
+        version: 1.0.0(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      cva:
+        specifier: npm:class-variance-authority@^0.7.0
+        version: class-variance-authority@0.7.0
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
+      ethers:
+        specifier: ^6.13.4
+        version: 6.13.4
+      jotai:
+        specifier: ^2.10.1
+        version: 2.10.2(@types/react@18.3.12)(react@19.0.0-rc-65a56d0e-20241020)
+      js-cookie:
+        specifier: ^3.0.5
+        version: 3.0.5
+      lucide-react:
+        specifier: ^0.453.0
+        version: 0.453.0(react@19.0.0-rc-65a56d0e-20241020)
+      next:
+        specifier: 15.0.0
+        version: 15.0.0(@babel/core@7.26.0)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      react:
+        specifier: 19.0.0-rc-65a56d0e-20241020
+        version: 19.0.0-rc-65a56d0e-20241020
+      react-colorful:
+        specifier: ^5.6.1
+        version: 5.6.1(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      react-day-picker:
+        specifier: 8.10.1
+        version: 8.10.1(date-fns@4.1.0)(react@19.0.0-rc-65a56d0e-20241020)
+      react-dom:
+        specifier: 19.0.0-rc-65a56d0e-20241020
+        version: 19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020)
+      react-dropzone:
+        specifier: ^14.2.10
+        version: 14.3.5(react@19.0.0-rc-65a56d0e-20241020)
+      react-hook-form:
+        specifier: ^7.53.1
+        version: 7.53.2(react@19.0.0-rc-65a56d0e-20241020)
+      react-icons:
+        specifier: ^5.3.0
+        version: 5.3.0(react@19.0.0-rc-65a56d0e-20241020)
+      rodal:
+        specifier: ^2.1.0
+        version: 2.1.0(react@19.0.0-rc-65a56d0e-20241020)
+      sonner:
+        specifier: ^1.5.0
+        version: 1.7.0(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      tailwind-merge:
+        specifier: ^2.5.4
+        version: 2.5.4
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.15)
+      vaul:
+        specifier: ^1.1.0
+        version: 1.1.1(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      yup:
+        specifier: ^1.4.0
+        version: 1.4.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@tanstack/react-query-devtools':
+        specifier: ^5.59.16
+        version: 5.60.4(@tanstack/react-query@4.36.1(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react-native@0.74.0(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
+      '@total-typescript/ts-reset':
+        specifier: ^0.6.1
+        version: 0.6.1
+      '@types/js-cookie':
+        specifier: ^3.0.6
+        version: 3.0.6
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.9.0
+      '@types/react':
+        specifier: ^18
+        version: 18.3.12
+      '@types/react-dom':
+        specifier: ^18
+        version: 18.3.1
+      postcss:
+        specifier: ^8
+        version: 8.4.49
+      tailwindcss:
+        specifier: ^3.4.1
+        version: 3.4.15
+      typescript:
+        specifier: ^5
+        version: 5.6.3
+
   packages/configuration:
     dependencies:
       '@dynamic-labs/ethereum':
