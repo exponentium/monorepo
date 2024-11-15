@@ -1,0 +1,46 @@
+{
+  "../../../node_modules/.pnpm/@turnkey+api-key-stamper@0.4.1/node_modules/@turnkey/api-key-stamper/dist/index.mjs -> ./nodecrypto.mjs": {
+    "id": "../../../node_modules/.pnpm/@turnkey+api-key-stamper@0.4.1/node_modules/@turnkey/api-key-stamper/dist/index.mjs -> ./nodecrypto.mjs",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_turnkey_api-key-stamper_0_4_1_node_modules_turnkey_api-k-7dc2d1.js"
+    ]
+  },
+  "../../../node_modules/.pnpm/@turnkey+api-key-stamper@0.4.1/node_modules/@turnkey/api-key-stamper/dist/index.mjs -> ./purejs.mjs": {
+    "id": "../../../node_modules/.pnpm/@turnkey+api-key-stamper@0.4.1/node_modules/@turnkey/api-key-stamper/dist/index.mjs -> ./purejs.mjs",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_turnkey_api-key-stamper_0_4_1_node_modules_turnkey_api-k-d54275.js"
+    ]
+  },
+  "../../../node_modules/.pnpm/@turnkey+api-key-stamper@0.4.1/node_modules/@turnkey/api-key-stamper/dist/index.mjs -> ./webcrypto.mjs": {
+    "id": "../../../node_modules/.pnpm/@turnkey+api-key-stamper@0.4.1/node_modules/@turnkey/api-key-stamper/dist/index.mjs -> ./webcrypto.mjs",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_turnkey_api-key-stamper_0_4_1_node_modules_turnkey_api-k-9848f3.js"
+    ]
+  },
+  "../../../node_modules/.pnpm/@walletconnect+ethereum-provider@2.11.2_@types+react@18.3.12_react@19.0.0-rc-66855b96-20241106/node_modules/@walletconnect/ethereum-provider/dist/index.es.js -> @walletconnect/modal": {
+    "id": "../../../node_modules/.pnpm/@walletconnect+ethereum-provider@2.11.2_@types+react@18.3.12_react@19.0.0-rc-66855b96-20241106/node_modules/@walletconnect/ethereum-provider/dist/index.es.js -> @walletconnect/modal",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_walletconnect_modal_2_7_0__types_react_18_3_12_react_19_-1604bd.js"
+    ]
+  },
+  "../../../node_modules/.pnpm/@walletconnect+modal@2.7.0_@types+react@18.3.12_react@19.0.0-rc-66855b96-20241106/node_modules/@walletconnect/modal/dist/index.js -> @walletconnect/modal-ui": {
+    "id": "../../../node_modules/.pnpm/@walletconnect+modal@2.7.0_@types+react@18.3.12_react@19.0.0-rc-66855b96-20241106/node_modules/@walletconnect/modal/dist/index.js -> @walletconnect/modal-ui",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_walletconnect_modal-ui_2_7_0__types_react_18_3_12_react_-ca32b0.js"
+    ]
+  },
+  "../../../node_modules/.pnpm/viem@2.21.45_typescript@5.6.3/node_modules/viem/_esm/actions/public/call.js -> ../../utils/ccip.js": {
+    "id": "../../../node_modules/.pnpm/viem@2.21.45_typescript@5.6.3/node_modules/viem/_esm/actions/public/call.js -> ../../utils/ccip.js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_viem_2_21_45_typescript_5_6_3_node_modules_viem__esm_uti-5aa966.js"
+    ]
+  },
+  "../../../node_modules/.pnpm/viem@2.21.45_typescript@5.6.3/node_modules/viem/_esm/utils/rpc/webSocket.js -> isows": {
+    "id": "../../../node_modules/.pnpm/viem@2.21.45_typescript@5.6.3/node_modules/viem/_esm/utils/rpc/webSocket.js -> isows",
+    "files": []
+  },
+  "../../../node_modules/.pnpm/viem@2.21.45_typescript@5.6.3/node_modules/viem/_esm/utils/signature/recoverPublicKey.js -> @noble/curves/secp256k1": {
+    "id": "../../../node_modules/.pnpm/viem@2.21.45_typescript@5.6.3/node_modules/viem/_esm/utils/signature/recoverPublicKey.js -> @noble/curves/secp256k1",
+    "files": []
+  }
+}
