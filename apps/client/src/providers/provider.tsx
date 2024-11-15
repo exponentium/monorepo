@@ -2,11 +2,10 @@
 
 import React from "react"
 
-import { ServerProvider } from "./server"
 import { TanstackProvider } from "./tanstack"
 
-const providerMap = {
-  server: (children: React.ReactNode) => <ServerProvider>{children}</ServerProvider>,
+const providerMap: Record<string, (children: React.ReactNode) => React.JSX.Element> = {
+  // server: (children: React.ReactNode) => <ServerProvider>{children}</ServerProvider>,
 }
 
 type ProvidersProps = {

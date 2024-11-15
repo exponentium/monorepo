@@ -20,6 +20,13 @@
     "isolatedModules": true,
     "paths": {}
   },
-  "include": ["apps/*/src", "apps/*/test", "packages/*/src", "packages/*/test"],
+  "include": [
+    "apps/*/src",
+    "apps/*/test",
+    "packages/*/src",
+    "packages/*/test",
+    "packages/interfaces",
+    "packages/configuration"
+  ],
   "exclude": ["node_modules", "**/dist", "**/build"]
 }

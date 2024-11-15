@@ -15,6 +15,7 @@
 		"storybook": "cross-env FORCE_COLOR=1 storybook dev -p 6006"
 	},
 	"dependencies": {
+        "@spheroid/configuration": "workspace:*",
         "@spheroid/dynamic": "workspace:*",
         "@spheroid/styles": "workspace:*",
 		"@commitlint/cli": "^19.5.0",
