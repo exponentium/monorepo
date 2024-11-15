@@ -1,8 +1,22 @@
+"use client"
+
 import React from "react"
-import { ConnectWallet, Wallet } from "@spheroid/coinbase"
-import { DynamicSdk } from "@spheroid/dynamic"
+import { CoinbaseProvider, ConnectWallet, Wallet } from "@spheroid/coinbase"
+import { DynamicProvider, DynamicSdk } from "@spheroid/dynamic"
 
 const HomePage = () => {
+  return (
+    <CoinbaseProvider>
+      <DynamicProvider>
+        <Widget />
+      </DynamicProvider>
+    </CoinbaseProvider>
+  )
+}
+
+export default HomePage
+
+const Widget = () => {
   return (
     <main className="align-center relative flex min-h-screen flex-col justify-end">
       <div className="z-10 mx-auto mb-20">
@@ -16,10 +30,10 @@ const HomePage = () => {
           </ConnectWallet>
           {/* <WalletDropdown> */}
           {/* <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick >
-              <Avatar />
-              <Name />
-              <Address className={color.foregroundMuted} />
-            </Identity> */}
+        <Avatar />
+        <Name />
+        <Address className={color.foregroundMuted} />
+      </Identity> */}
           {/* <WalletDropdownDisconnect /> */}
           {/* </WalletDropdown> */}
         </Wallet>
@@ -27,5 +41,3 @@ const HomePage = () => {
     </main>
   )
 }
-
-export default HomePage

@@ -1,27 +1,35 @@
 "use client"
 
-import { ReactNode, useState } from "react"
+import React, { useState } from "react"
 import { baseSepolia } from "viem/chains"
-import { State, WagmiProvider } from "wagmi"
+import { WagmiProvider } from "wagmi"
 import { OnchainKitProvider } from "@coinbase/onchainkit"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 import { getConfig } from "./wagmi"
 
-export function Providers(props: { children: ReactNode; initialState?: State }) {
+// export * from "@coinbase/onchainkit/api"
+// export * from "@coinbase/onchainkit/core"
+// export * from "@coinbase/onchainkit/identity"
+// export * from "@coinbase/onchainkit"
+export * from "@coinbase/onchainkit/wallet"
+
+export const CoinbaseProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [config] = useState(() => getConfig())
   const [queryClient] = useState(() => new QueryClient())
+
+  if (!config) {
+    return <></>
+  }
+
   return (
-    <WagmiProvider
-      config={config}
-      initialState={props.initialState}
-    >
+    <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <OnchainKitProvider
           apiKey="5XWSQ9a9m1RWedWAMXwinIMEafSJWOZO"
           chain={baseSepolia}
         >
-          {props.children}
+          {children}
         </OnchainKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

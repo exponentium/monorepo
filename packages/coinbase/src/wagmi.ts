@@ -2,7 +2,7 @@ import { cookieStorage, createConfig, createStorage, http } from "wagmi"
 import { base, baseSepolia } from "wagmi/chains"
 import { coinbaseWallet } from "wagmi/connectors"
 
-export function getConfig() {
+export const getConfig = () => {
   return createConfig({
     chains: [baseSepolia, base],
     connectors: [
