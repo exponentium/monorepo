@@ -4,13 +4,38 @@ A decentralized modern payment protocol with loyalty tokens to seamlessly onboar
 
 ## ✨ Features
 
-- **Email-Based Web3 Onboarding**: Users and merchants can sign up using just their email address, with automatic smart wallet creation
-- **Gas Sponsorship**: We sponsor gas fees for merchants new to web3, reducing barriers to entry
-- **Custom Loyalty Tokens**: Merchants can create personalized loyalty tokens by simply uploading an image and providing basic details
-- **Reward System**: Automatic loyalty token rewards for customers on every purchase
-- **Smart Wallet Integration**: Seamless wallet creation and management for users
-- **Fiat Payment Support**: Accept payments via Visa card with automatic crypto conversion
-- **Customer Analytics**: Track top customers and manage reward distributions
+- Users and merchants can sign up using just their email address, with automatic smart wallet creation
+- We sponsor gas fees for merchants new to web3, reducing barriers to entry
+- Merchants can create personalized loyalty tokens by simply uploading an image and providing basic details
+- Automatic loyalty token rewards for customers on every purchase
+- Accept payments via Visa card with automatic crypto conversion using onramp services
+- Track top customers and manage reward distributions
+
+## Sponsers
+
+### Base
+
+We are using base to delpoy all the contracts used by this app and usinng the payment system provided by base.
+
+### Coinbase
+
+We are using coinbase developer tool as a chery onn top for base to enhance the experience of the user. We are using this to make smart wallets for users.
+
+### Sign Protocol
+
+We are utilizing custom hooks of sign protocol for loyalty point distribution across users. Also we are attesting the users purchases on chain so that we can categorize users in future.
+
+### Dynamic
+
+We are using the wallet connnect and non pop up signing of dynamic to make the experience of the user more smooth.
+
+### CurveGrid
+
+We are using CurveGrid's Multibass to make custom webhooks to read data from our contract.
+
+### Blockscout
+
+We are using the Blockscout contract verification.
 
 ## 🚀 Quick Start
 
@@ -25,8 +50,8 @@ A decentralized modern payment protocol with loyalty tokens to seamlessly onboar
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/your-username/spheroid.git
-cd spheroid
+git clone https://github.com/exponentium/monorepo.git
+cd monorepo
 ```
 
 2. **Install dependencies**
@@ -58,8 +83,8 @@ Visit `http://localhost:3000` to see your application running.
 - **Frontend**: Next.js, React, TailwindCSS
 - **Blockchain**: Ethereum, Smart Contracts
 - **Storage**: Lighthouse
-- **Authentication**: Email-based with Smart Wallet
-- **Payment Processing**: Visa Integration with Crypto Conversion
+- **Authentication**: Dyanmic and Coinbase
+- **Payment Processing**: Using Coinbase onramp payment
 
 ## 📱 Key Components
 
@@ -67,14 +92,14 @@ Visit `http://localhost:3000` to see your application running.
 
 - Email-based signup with automatic wallet creation
 - Simple payment process using familiar methods
-- Earn loyalty tokens with every purchase
-- View and manage rewards in a user-friendly dashboard
+- User can earn loyalty tokens set by the merchant
+- User can just scan to pay the bill
 
 ### For Merchants
 
 - Easy onboarding with email signup
-- Custom loyalty token creation
-- Customer analytics and reward management
+- Merchants can create their own loaylty token with just uploading the image, name and symbol
+- later they can set the giveaway of their token on every sale to the custommer
 - Gas-sponsored transactions for newcomers
 
 ## 🔧 Configuration
@@ -87,16 +112,6 @@ Visit `http://localhost:3000` to see your application running.
 | NEXT_PUBLIC_API_URL            | Backend API endpoint       | Yes      |
 | NEXT_PUBLIC_LIGHTHOUSE_API_KEY | Lighthouse storage API key | Yes      |
 | PRIVATE_KEY                    | Wallet private key         | Yes      |
-
-## 🤝 Contributing
-
-We welcome contributions!
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## 🔐 Security
 
