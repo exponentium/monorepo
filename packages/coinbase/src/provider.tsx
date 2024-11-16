@@ -8,11 +8,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 import { getConfig } from "./wagmi"
 
-// export * from "@coinbase/onchainkit/api"
-// export * from "@coinbase/onchainkit/core"
-// export * from "@coinbase/onchainkit/identity"
 // export * from "@coinbase/onchainkit"
+export * from "@coinbase/onchainkit/api"
+export * from "@coinbase/onchainkit/core"
+export * from "@coinbase/onchainkit/identity"
 export * from "@coinbase/onchainkit/wallet"
+export * from "wagmi"
 
 export const CoinbaseProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [config] = useState(() => getConfig())

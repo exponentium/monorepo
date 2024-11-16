@@ -1,13 +1,13 @@
 "use client"
 
 import React, { useState } from "react"
-import { IoAlertCircle } from "react-icons/io5"
+import { IoAlertCircleOutline } from "react-icons/io5"
 import { toast } from "sonner"
 import { Button } from "@spheroid/ui"
 
 import ProductDisplayCard from "@/components/views/ProductDisplayCard"
 
-const Services = () => {
+const Service: React.FC = () => {
   const [image, setImage] = useState<File | null>(null)
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
@@ -35,7 +35,7 @@ const Services = () => {
 
   const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
-    if (value === "" || /^[0-9]*$/.test(value)) {
+    if (value === "" || /^[0-9]*\.?[0-9]*$/.test(value)) {
       setPrice(value)
     }
   }
@@ -56,11 +56,11 @@ const Services = () => {
       toast.error("Please enter a product name.")
       return false
     }
-    if (!price || price === "0") {
+    if (!price || parseFloat(price) <= 0) {
       toast.error("Please enter a valid price.")
       return false
     }
-    if (!loyaltyPoint || loyaltyPoint === "0") {
+    if (!loyaltyPoint || parseInt(loyaltyPoint) <= 0) {
       toast.error("Please enter loyalty points.")
       return false
     }
@@ -69,103 +69,203 @@ const Services = () => {
 
   const handleCreateProduct = () => {
     if (validateFields()) {
-      toast.success("Service created successfully!")
-      // Add your product creation logic here
+      toast.success("Product created successfully!")
+      // TODO: Upload product details to the storage
+
+      // TODO: Register product/service to the registry
     }
   }
 
   return (
-    <div className="flex w-full flex-col gap-4 p-6">
-      <div className="flex w-full flex-row gap-4 rounded-lg p-6 shadow-xl">
-        <div className="flex w-2/3 flex-col gap-4 rounded-lg border border-gray-400 p-4">
-          <h2 className="text-xl font-semibold">Service Details</h2>
-          <hr />
-          <div className="flex flex-row items-center gap-2 rounded-lg bg-gray-200 p-2">
-            <IoAlertCircle />
-            <span className="text-base">
-              The information on this page is unalterable; kindly ensure that the details are entered accurately.
-            </span>
-          </div>
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col items-start gap-2 font-normal text-gray-500">
-              {image ? (
-                <span className="text-base text-green-600">Uploaded Image: {image.name}</span>
-              ) : (
-                <>
-                  <span className="text-base">Image *</span>
-                  <span className="text-sm">JPG, PNG, GIF - resolution 350*350, size 5MB recommended</span>
-                </>
-              )}
-              <label
-                htmlFor="image-upload"
-                className="cursor-pointer rounded-md border-2 border-blue-600 px-4 py-2 text-blue-600 hover:bg-blue-50"
-              >
-                Upload Image
-              </label>
-              <input
-                id="image-upload"
-                type="file"
-                className="hidden"
-                onChange={handleImageChange}
-              />
-            </div>
-            <div className="flex flex-col items-start gap-2 font-normal text-gray-500">
-              <span className="text-base">Name *</span>
-              <input
-                type="text"
-                value={name}
-                onChange={handleNameChange}
-                className="flex w-[400px] rounded-lg border border-gray-400 p-2"
-                placeholder="Name"
-              />
-            </div>
-            <div className="flex flex-col items-start gap-2 font-normal text-gray-500">
-              <span className="text-base">Description</span>
-              <textarea
-                value={description}
-                onChange={handleDescriptionChange}
-                className="flex w-[400px] rounded-lg border border-gray-400 p-2"
-                placeholder="Description"
-              />
-            </div>
-            <div className="flex flex-col items-start gap-2 font-normal text-gray-500">
-              <span className="text-base">Price *</span>
-              <input
-                type="text"
-                value={price}
-                onChange={handlePriceChange}
-                className="flex w-[400px] rounded-lg border border-gray-400 p-2"
-                placeholder="Price"
-              />
-            </div>
-            <div className="flex flex-col items-start gap-2 font-normal text-gray-500">
-              <span className="text-base">Loyalty Points per purchase *</span>
-              <input
-                type="text"
-                value={loyaltyPoint}
-                onChange={handleLoyaltyPointChange}
-                className="flex w-[400px] rounded-lg border border-gray-400 p-2"
-                placeholder="Loyalty Points"
-              />
-            </div>
-          </div>
-          <Button
-            variant="primary"
-            onClick={handleCreateProduct}
-          >
-            Create
-          </Button>
+    <div className="h-screen w-full overflow-y-scroll bg-gray-50 p-8 pb-20">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-800">Create New Product</h1>
+          <p className="mt-2 text-gray-600">Fill in the details below to add a new product to your collection.</p>
         </div>
-        <ProductDisplayCard
-          price={price}
-          image={image ? URL.createObjectURL(image) : undefined}
-          loyaltyPoints={loyaltyPoint}
-          description={description}
-          name={name}
-        />
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          {/* Form Section */}
+          <div className="lg:col-span-2">
+            <div className="rounded-lg bg-white p-6 shadow">
+              <div className="mb-6">
+                <div className="flex items-center text-yellow-600">
+                  <IoAlertCircleOutline className="mr-2 h-6 w-6" />
+                  <p className="text-sm">
+                    Ensure that the details entered here are accurate as they cannot be modified later.
+                  </p>
+                </div>
+              </div>
+              <div className="space-y-6">
+                {/* Image Upload */}
+                <div>
+                  <label
+                    htmlFor="image-upload"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Product Image <span className="text-red-500">*</span>
+                  </label>
+                  {image ? (
+                    <div className="mt-2 flex items-center">
+                      <img
+                        src={URL.createObjectURL(image)}
+                        alt="Product"
+                        className="h-20 w-20 rounded-md border border-gray-300 object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setImage(null)}
+                        className="ml-4 text-sm text-red-600 hover:underline"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="mt-2">
+                      <label
+                        htmlFor="image-upload"
+                        className="flex cursor-pointer items-center justify-center rounded-md border border-dashed border-gray-300 p-6 text-center"
+                      >
+                        <div className="space-y-1 text-center">
+                          <svg
+                            className="mx-auto h-12 w-12 text-gray-400"
+                            stroke="currentColor"
+                            fill="none"
+                            viewBox="0 0 48 48"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M28 8H20C14.4772 8 10 12.4772 10 18V30C10 35.5228 14.4772 40 20 40H28C33.5228 40 38 35.5228 38 30V18C38 12.4772 33.5228 8 28 8Z"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M22 14L26 18M26 14L22 18"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                          <div className="flex text-sm text-gray-600">
+                            <span className="relative cursor-pointer rounded-md bg-white font-medium text-blue-600 hover:text-blue-500">
+                              Upload an image
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
+                        </div>
+                        <input
+                          id="image-upload"
+                          name="image-upload"
+                          type="file"
+                          accept="image/*"
+                          className="sr-only"
+                          onChange={handleImageChange}
+                        />
+                      </label>
+                    </div>
+                  )}
+                </div>
+
+                {/* Product Name */}
+                <div>
+                  <label
+                    htmlFor="product-name"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Product Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="product-name"
+                    type="text"
+                    value={name}
+                    onChange={handleNameChange}
+                    className="mt-1 block w-full rounded-md border border-solid border-gray-300 p-2 sm:text-sm"
+                    placeholder="Enter product name"
+                  />
+                </div>
+
+                {/* Description */}
+                <div>
+                  <label
+                    htmlFor="product-description"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    id="product-description"
+                    value={description}
+                    onChange={handleDescriptionChange}
+                    rows={4}
+                    className="mt-1 block w-full rounded-md border border-solid border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    placeholder="Write a brief description"
+                  />
+                </div>
+
+                {/* Price */}
+                <div>
+                  <label
+                    htmlFor="product-price"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Price ($) <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="product-price"
+                    type="text"
+                    value={price}
+                    onChange={handlePriceChange}
+                    className="mt-1 block w-full rounded-md border border-solid border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    placeholder="Enter price"
+                  />
+                </div>
+
+                {/* Loyalty Points */}
+                <div>
+                  <label
+                    htmlFor="product-mint"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Loyalty Points <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="product-mint"
+                    type="text"
+                    value={loyaltyPoint}
+                    onChange={handleLoyaltyPointChange}
+                    className="mt-1 block w-full rounded-md border border-solid border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    placeholder="Enter loyalty points"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Preview Section */}
+          <div className="rounded-lg bg-white p-6 shadow">
+            <h2 className="mb-4 text-lg font-medium text-gray-800">Preview</h2>
+            <ProductDisplayCard
+              price={price}
+              image={image ? URL.createObjectURL(image) : undefined}
+              loyaltyPoints={loyaltyPoint}
+              description={description}
+              name={name}
+            />
+
+            <div className="pt-5">
+              <Button
+                variant="primary"
+                className="center mb-4 w-full rounded-md bg-blue-600 px-6 py-3 text-white shadow-md transition duration-300 hover:bg-blue-700"
+                onClick={handleCreateProduct}
+              >
+                Create Product
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
 }
 
-export default Services
+export default Service

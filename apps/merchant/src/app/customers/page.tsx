@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+
 import Table, { Column } from "@/components/ui/Table"
 
 type User = {

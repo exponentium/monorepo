@@ -1,7 +1,6 @@
+// components/ProductDisplayCard.tsx
 import React from "react"
 import Image from "next/image"
-
-import dummyImage from "../../../public/images/dummy-image.png"
 
 type ProductDisplayCardProps = {
   image?: string
@@ -11,29 +10,38 @@ type ProductDisplayCardProps = {
   loyaltyPoints?: string
 }
 
-const ProductDisplayCard: React.FC<ProductDisplayCardProps> = ({ image, name, description, price, loyaltyPoints }) => {
+const ProductDisplayCard: React.FC<ProductDisplayCardProps> = ({
+  image,
+  name = "Product Name",
+  description = "No description provided.",
+  price = "0.00",
+  loyaltyPoints = "0",
+}) => {
   return (
-    <div className="flex w-[400px] flex-col gap-4 rounded-lg border border-gray-400 p-4 shadow-lg">
-      <h2 className="text-lg font-semibold">{name ? name : "Product Name"}</h2>
-      {image ? (
+    <div className="max-w-sm overflow-hidden rounded-lg bg-white shadow-md">
+      {/* Product Image */}
+      <div className="relative h-64 w-full">
         <Image
-          src={image}
-          width={350}
-          height={350}
-          alt="product"
+          src={image || "/images/dummy-image.png"}
+          alt={name}
+          layout="fill"
+          objectFit="cover"
+          className="object-cover"
         />
-      ) : (
-        <Image
-          src={dummyImage}
-          width={350}
-          height={350}
-          alt="dummy"
-        />
-      )}
-      <div className="text-base font-normal">{description && description}</div>
-      <div className="rounded-lg bg-gray-200 bg-opacity-70 px-2 py-1 text-base">Price: {price && price} </div>
-      <div className="rounded-lg bg-gray-200 bg-opacity-70 px-2 py-1 text-base">
-        Loyalty points per purchase: {loyaltyPoints && loyaltyPoints}
+      </div>
+
+      {/* Product Details */}
+      <div className="p-6">
+        <h2 className="text-xl font-semibold text-gray-800">{name}</h2>
+        <p className="mt-2 text-sm text-gray-600">{description}</p>
+
+        {/* Price and Loyalty Points */}
+        <div className="mt-4 flex items-center justify-between">
+          <span className="text-lg font-bold text-blue-600">${price}</span>
+          <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-600">
+            {loyaltyPoints} Points
+          </span>
+        </div>
       </div>
     </div>
   )

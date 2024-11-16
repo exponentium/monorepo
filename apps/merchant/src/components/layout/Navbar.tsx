@@ -1,102 +1,71 @@
 "use client"
 
-import React, { useContext, useState } from "react"
+import React, { useContext } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { Menu, X } from "lucide-react"
-import { GiHamburgerMenu } from "react-icons/gi"
-import { Button } from "@spheroid/ui"
+import { FiBell, FiSettings } from "react-icons/fi"
 
 import { SideMenuContext } from "@/context/SideMenuContext"
 
-const Navbar = () => {
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false)
+const Navbar: React.FC = () => {
   const { toggleCollapsed } = useContext(SideMenuContext)
-  const router = useRouter()
-  const pathname = usePathname()
-
-  const handleNavigation = (path: string) => {
-    router.push(path)
-    setMobileMenuOpen(false) // Close menu on navigation
-  }
-
-  const isActivePath = (path: string) => pathname === path
 
   return (
-    <nav className="relative top-0 z-30 w-full bg-white/80 shadow-md backdrop-blur-sm">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-8">
-        <button onClick={toggleCollapsed}>
-          <GiHamburgerMenu />
-        </button>
-        <Link
-          href="/"
-          className="flex items-center space-x-2"
-        >
-          <Image
-            src={"/logo.png"}
-            alt="Logo"
-            width={28}
-            height={28}
-            className="rounded-lg"
-          />
-          <span className="font-bold text-gray-800"></span>
-        </Link>
-        <div className="hidden items-center space-x-6 md:flex">
-          <Button
-            onClick={() => (window.location.href = "/demo")}
-            variant={"primary"}
-            className="px-4"
-          >
-            Login
-          </Button>
-        </div>
-
-        <button
-          className="z-50 text-gray-800 md:hidden"
-          onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
-      </div>
-
-      <div
-        className={`fixed right-0 top-0 mt-14 h-fit w-fit transform rounded-md bg-white p-5 shadow-md md:hidden ${
-          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        } z-40 transition-transform duration-300 ease-in-out`}
-      >
-        <div className="flex h-full flex-col items-center justify-center space-y-6 text-lg font-medium text-gray-800">
-          <Link
-            href="/product"
-            onClick={() => handleNavigation("/product")}
-            className={`transition-colors ${isActivePath("/product") ? "text-blue-600" : "hover:text-gray-700"}`}
-          >
-            Product
-          </Link>
-          <Link
-            href="/about"
-            onClick={() => handleNavigation("/about")}
-            className={`transition-colors ${isActivePath("/about") ? "text-blue-600" : "hover:text-gray-700"}`}
-          >
-            About Us
-          </Link>
-          <button
-            onClick={() => handleNavigation("/get-started")}
-            className="flex items-center text-blue-600 hover:text-blue-700"
-          >
-            Get Started
-            <svg
-              className="ml-1 h-4 w-4"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+    <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm">
+      <div className="mx-auto max-w-full px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          {/* Left Section */}
+          <div className="flex items-center space-x-4">
+            {/* Sidebar Toggle Button */}
+            <button
+              onClick={toggleCollapsed}
+              className="p-2 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <path d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+              {/* You can use any icon here */}
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+
+            {/* Logo and App Name */}
+            <Link
+              href="/dashboard"
+              className="flex items-center"
+            >
+              <Image
+                src="/logo.svg"
+                alt="Spheroid Logo"
+                width={32}
+                height={32}
+                className="h-8 w-8"
+              />
+              <span className="ml-2 text-xl font-bold text-gray-800">Spheroid</span>
+            </Link>
+          </div>
+
+          {/* Right Section */}
+          <div className="flex items-center space-x-4">
+            {/* Notification Icons */}
+            <button className="p-2 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <FiBell className="h-6 w-6" />
+            </button>
+
+            {/* Settings Icon */}
+            <button className="p-2 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <FiSettings className="h-6 w-6" />
+            </button>
+          </div>
         </div>
       </div>
     </nav>

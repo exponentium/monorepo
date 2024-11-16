@@ -1,5 +1,5 @@
+// components/CountCard.tsx
 import React from "react"
-import { cva } from "class-variance-authority"
 import { IoAlertCircleOutline } from "react-icons/io5"
 
 type CountCardProps = {
@@ -7,16 +7,14 @@ type CountCardProps = {
   count: number | string
 }
 
-const cardClasses = cva("flex flex-col items-start gap-2 rounded-md p-5 shadow-lg")
-
 const CountCard: React.FC<CountCardProps> = ({ label, count }) => {
   return (
-    <div className={cardClasses()}>
-      <div className="flex w-full flex-row items-center justify-between">
-        <h2 className="text-xl font-semibold">{label}</h2>
-        <IoAlertCircleOutline />
+    <div className="flex flex-col rounded-lg bg-white p-6 shadow-md">
+      <div className="flex items-center justify-between gap-1.5">
+        <h2 className="text-lg font-medium text-gray-700">{label}</h2>
+        <IoAlertCircleOutline className="ml-2.5 h-2.5 w-2.5 text-gray-400" />
       </div>
-      <div className="text-xl font-bold">{count}</div>
+      <div className="mt-4 text-3xl font-semibold text-gray-900">{count}</div>
     </div>
   )
 }
