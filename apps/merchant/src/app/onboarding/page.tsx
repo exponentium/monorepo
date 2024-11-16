@@ -2,7 +2,7 @@ import React from "react"
 
 import SignUp from "@/components/views/SignUp"
 
-const Dashboard = () => {
+const Onboarding = () => {
   return (
     <>
       <SignUp />
@@ -10,4 +10,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default Onboarding

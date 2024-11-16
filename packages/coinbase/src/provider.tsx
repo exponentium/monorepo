@@ -10,6 +10,7 @@ import { getConfig } from "./wagmi"
 
 // export * from "@coinbase/onchainkit"
 export * from "@coinbase/onchainkit/api"
+export * from "@coinbase/onchainkit/transaction"
 export * from "@coinbase/onchainkit/core"
 export * from "@coinbase/onchainkit/identity"
 export * from "@coinbase/onchainkit/wallet"

@@ -10,11 +10,13 @@ const env = createEnv({
   },
   client: {
     NEXT_PUBLIC_API_URL: z.string().url(),
+    NEXT_PUBLIC_LIGHTHOUSE_API_KEY: z.string().optional(),
   },
 
   runtimeEnv: {
     ANALYZE: process.env.ANALYZE,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_LIGHTHOUSE_API_KEY: process.env.NEXT_PUBLIC_LIGHTHOUSE_API_KEY,
   },
 })
 

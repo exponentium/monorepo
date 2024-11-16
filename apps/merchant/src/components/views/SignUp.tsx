@@ -2,24 +2,26 @@
 
 import React, { useState } from "react"
 import { toast } from "sonner"
+import { redirect } from "next/navigation"
 import { CornerConfetti } from "@spheroid/ts-particles"
 import { Button } from "@spheroid/ui"
-import { useWriteContract } from "@spheroid/coinbase"
-import { PROTOCOL_ABI, PROTOCOL_BASE_SEPOLIA } from "@spheroid/configuration"
+import { useAccount, useWriteContract } from "@spheroid/coinbase"
+import { BASE_SEPOLIA_CHAIN_ID, environment, PROTOCOL_ABI, PROTOCOL_BASE_SEPOLIA } from "@spheroid/configuration"
+import lighthouse from "@lighthouse-web3/sdk"
 
 const Onboarding: React.FC = () => {
   const { writeContract } = useWriteContract()
   const [activeStep, setActiveStep] = useState<number | null>(1)
 
   // Step 1: Merchant Information
-  const [merchantName, setMerchantName] = useState("")
-  const [merchantDescription, setMerchantDescription] = useState("")
-  const [merchantLocation, setMerchantLocation] = useState("")
-  const [merchantWebsite, setMerchantWebsite] = useState("")
-  const [merchantTwitter, setMerchantTwitter] = useState("")
-  const [merchantTelegram, setMerchantTelegram] = useState("")
-  const [merchantDiscord, setMerchantDiscord] = useState("")
-  const [merchantInstagram, setMerchantInstagram] = useState("")
+  const [merchantName, setMerchantName] = useState("Ethglobal")
+  const [merchantDescription, setMerchantDescription] = useState("This is a test description")
+  const [merchantLocation, setMerchantLocation] = useState("Bangkok, Thailand")
+  const [merchantWebsite, setMerchantWebsite] = useState("ethglobal.com")
+  const [merchantTwitter, setMerchantTwitter] = useState("ethglobal")
+  const [merchantTelegram, setMerchantTelegram] = useState("ethglobal")
+  const [merchantDiscord, setMerchantDiscord] = useState("ethglobal")
+  const [merchantInstagram, setMerchantInstagram] = useState("ethglobal")
   const [merchantFacebook, setMerchantFacebook] = useState("")
   const [merchantFarcaster, setMerchantFarcaster] = useState("")
   const [merchantLens, setMerchantLens] = useState("")
@@ -27,8 +29,8 @@ const Onboarding: React.FC = () => {
   const [merchantImagePreview, setMerchantImagePreview] = useState<string | null>(null)
 
   // Step 2: Loyalty Token Details
-  const [tokenName, setTokenName] = useState("")
-  const [tokenSymbol, setTokenSymbol] = useState("")
+  const [tokenName, setTokenName] = useState("ETHGLOBAL")
+  const [tokenSymbol, setTokenSymbol] = useState("GLB")
   const [tokenImage, setTokenImage] = useState<File | null>(null)
   const [tokenImagePreview, setTokenImagePreview] = useState<string | null>(null)
 
@@ -119,21 +121,85 @@ const Onboarding: React.FC = () => {
     // TODO: Submit form data to the storage
     setIsSubmitting(true)
 
-    // TODO: Register the loyalty token
-    toast.success("Going towrite")
+    // if (!environment.NEXT_PUBLIC_LIGHTHOUSE_API_KEY) {
+    //   toast.error("There was an error")
+    //   return
+    // }
+    // console.log("Posting on lighthouse")
+
+    // // TODO: Upload merchant image to lighthouse
+    // let imageUploadResponse = null
+    // if (merchantImage) {
+    //   console.log("Uploading merchant image")
+    //   imageUploadResponse = await lighthouse.upload(
+    //     [merchantImage],
+    //     environment.NEXT_PUBLIC_LIGHTHOUSE_API_KEY,
+    //     undefined,
+    //     (progressData) => {
+    //       let percentageDone = (100 - (progressData?.progress ?? 0)).toFixed(2)
+    //       console.log("Image upload percentage: ", percentageDone)
+    //     }
+    //   )
+    //   console.log("Merchant image uploaded:", imageUploadResponse?.data.Hash)
+    // }
+
+    // // Register the loyalty token
+    // const merchantData = {
+    //   name: merchantName,
+    //   description: merchantDescription,
+    //   image: imageUploadResponse?.data.Hash,
+    //   location: merchantLocation,
+    //   website: merchantWebsite,
+    //   social: {
+    //     twitter: merchantTwitter,
+    //     telegram: merchantTelegram,
+    //     discord: merchantDiscord,
+    //     instagram: merchantInstagram,
+    //     facebook: merchantFacebook,
+    //     farcaster: merchantFarcaster,
+    //     lens: merchantLens,
+    //   },
+    // }
+
+    // console.log("Uploading merchant data")
+    // const responseText = await lighthouse.uploadText(
+    //   JSON.stringify(merchantData),
+    //   environment.NEXT_PUBLIC_LIGHTHOUSE_API_KEY,
+    //   `merchant-${merchantName}`
+    // )
+    // console.log("Merchant data uploaded:", responseText.data)
+
+    // const cid = responseText.data
+    // console.log("Registering merchant on blockchain with CID:", cid)
+
+    // console.log("Writing to Blockchain: ", { merchantName, cid, tokenName, tokenSymbol })
+    const data = {
+      merchantName: "Ethglobal",
+      cid: {
+        Name: "merchant-Ethglobal",
+        Hash: "bafkreiae3pbif3poppy6svdswv533nwdqvodgcgjxvnl3rjl2xvl6ohlaq",
+        Size: "331",
+      },
+      tokenName: "ETHGLOBAL",
+      tokenSymbol: "GLB",
+    }
+
     writeContract({
       abi: PROTOCOL_ABI,
       address: PROTOCOL_BASE_SEPOLIA,
       functionName: "deployMerchantWithToken",
-      args: [merchantName, "cid_placeholder", tokenName, tokenSymbol],
+      //   args: [merchantName, cid, tokenName, tokenSymbol],
+      args: [merchantName, data.cid, tokenName, tokenSymbol],
+      chainId: BASE_SEPOLIA_CHAIN_ID,
     })
-    toast.success("Done wwrite")
-    // TODO: Add the data to SC
 
-    // TODO: Redirect to dashboard
+    // Redirect to dashboard
     // setIsSubmitting(false)
     // toast.success("Profile setup complete!")
     // toast.success("Redirecting to base...")
+
+    // console.log("Redirecting to dashboard")
+    // redirect("/dashboard")
   }
 
   return (

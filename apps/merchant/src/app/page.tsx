@@ -21,25 +21,22 @@ export default Home
 const HomeView = () => {
   const { address, isConnected } = useAccount()
 
-  const { data, isFetched } = useReadMerchantRegistryContract({
+  const { data: isRegistered, isFetched } = useReadMerchantRegistryContract({
     functionName: "isMerchantRegistered",
     args: [address],
   })
 
-  console.log("Fetched data:", address, data)
+  console.log("Fetched data:", address, isRegistered)
 
   useEffect(() => {
-    if (isConnected && address) {
-      // TODO: Check if the address is registered to the Merchant registry
-      const isRegisteredWithMerchantRegistry = true
-
-      //   if (isRegisteredWithMerchantRegistry) {
-      //     redirect("/dashboard")
-      //   } else {
-      //     redirect("/onboarding")
-      //   }
+    if (isConnected && address && isFetched) {
+      if (isRegistered) {
+        redirect("/dashboard")
+      } else {
+        redirect("/onboarding")
+      }
     }
-  }, [address, isConnected])
+  }, [address, isConnected, isRegistered])
 
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
