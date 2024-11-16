@@ -24,25 +24,7 @@ const ScannerPage = () => {
     merchantName: string
     total: number
     products: { name: string; price: number; quantity: number }[]
-    //   } | null>(null)
-  } | null>({
-    orderId: "123456",
-    merchantAddress: "0xE2B48E911562a221619533a5463975Fdd92E7fC7",
-    merchantName: "Madhav",
-    products: [
-      {
-        name: "Product 1",
-        price: 100,
-        quantity: 1,
-      },
-      {
-        name: "Product 2",
-        price: 200,
-        quantity: 2,
-      },
-    ],
-    total: 500,
-  })
+  } | null>(null)
 
   //   useEffect(() => {
   //     const rawData = data ? JSON.parse(data) : null
