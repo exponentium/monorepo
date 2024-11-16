@@ -1,6 +1,7 @@
 import React from "react"
 import * as DynamicEthereum from "@dynamic-labs/ethereum"
 import * as DynamicSdk from "@dynamic-labs/sdk-react-core"
+import * as SendTx from "@dynamic-labs/sdk-react-core"
 
 export const DynamicProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -15,4 +16,4 @@ export const DynamicProvider: React.FC<{ children: React.ReactNode }> = ({ child
   )
 }
 
-export { DynamicEthereum, DynamicSdk }
+export { DynamicEthereum, DynamicSdk, SendTx }
