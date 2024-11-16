@@ -4,15 +4,43 @@ import React, { useState } from "react"
 import { IoAlertCircleOutline } from "react-icons/io5"
 import { toast } from "sonner"
 import { Button } from "@spheroid/ui"
+import lighthouse from "@lighthouse-web3/sdk"
 
 import ProductDisplayCard from "@/components/views/ProductDisplayCard"
+import {
+  BASE_SEPOLIA_CHAIN_ID,
+  environment,
+  MERCHANT_REGISTRY_ABI,
+  MERCHANT_REGISTRY_BASE_SEPOLIA,
+} from "@spheroid/configuration"
+import {
+  Transaction,
+  TransactionButton,
+  TransactionSponsor,
+  TransactionStatus,
+  TransactionStatusAction,
+  TransactionStatusLabel,
+  useAccount,
+  Viem,
+} from "@spheroid/coinbase"
 
 const Service: React.FC = () => {
+  const { address } = useAccount()
+
   const [image, setImage] = useState<File | null>(null)
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [price, setPrice] = useState<string>("0")
   const [loyaltyPoint, setLoyaltyPoint] = useState<string>("0")
+
+  const [metaState, setMetaState] = useState<{
+    name: string
+    description: string
+    price: number
+    loyaltyPoint: number
+    cid: string
+    image?: string
+  } | null>(null)
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null
@@ -67,12 +95,44 @@ const Service: React.FC = () => {
     return true
   }
 
-  const handleCreateProduct = () => {
+  const handleCreateProduct = async () => {
     if (validateFields()) {
-      toast.success("Product created successfully!")
-      // TODO: Upload product details to the storage
+      if (!environment.NEXT_PUBLIC_LIGHTHOUSE_API_KEY) {
+        toast.error("There was an error")
+        return
+      }
 
-      // TODO: Register product/service to the registry
+      let imageUploadResponse = null
+      if (image) {
+        console.log("Uploading service image")
+        imageUploadResponse = await lighthouse.upload(
+          [image],
+          environment.NEXT_PUBLIC_LIGHTHOUSE_API_KEY,
+          undefined,
+          (progressData) => {
+            let percentageDone = (100 - (progressData?.progress ?? 0)).toFixed(2)
+            console.log("Image upload percentage: ", percentageDone)
+          }
+        )
+        console.log("Service image uploaded:", imageUploadResponse?.data.Hash)
+      }
+
+      const serviceData = {
+        name,
+        description,
+        price: parseFloat(price),
+        loyaltyPoint: parseInt(loyaltyPoint),
+        image: imageUploadResponse?.data.Hash,
+      }
+
+      const response = await lighthouse.uploadText(
+        JSON.stringify(serviceData),
+        environment.NEXT_PUBLIC_LIGHTHOUSE_API_KEY,
+        `${address}:service-${name}`
+      )
+      const cid = response.data
+
+      setMetaState({ ...serviceData, cid })
     }
   }
 
@@ -253,13 +313,53 @@ const Service: React.FC = () => {
             />
 
             <div className="pt-5">
-              <Button
-                variant="primary"
-                className="center mb-4 w-full rounded-md bg-blue-600 px-6 py-3 text-white shadow-md transition duration-300 hover:bg-blue-700"
-                onClick={handleCreateProduct}
-              >
-                Create Product
-              </Button>
+              {metaState ? (
+                <>
+                  <Transaction
+                    onError={(error) => {
+                      console.error("Error", error)
+                      toast.error("An error occurred. Please try again.")
+                    }}
+                    onSuccess={(response) => {
+                      setTimeout(() => {
+                        toast.success("Service setup complete!")
+                      }, 500)
+                    }}
+                    chainId={BASE_SEPOLIA_CHAIN_ID}
+                    contracts={[
+                      {
+                        address: MERCHANT_REGISTRY_BASE_SEPOLIA,
+                        abi: MERCHANT_REGISTRY_ABI,
+                        functionName: "addServiceToMerchant",
+                        args: [
+                          address,
+                          Viem.pad(Viem.stringToHex(metaState.name, { size: 32 })),
+                          Viem.pad(Viem.stringToHex(metaState.cid, { size: 32 })),
+                          metaState.loyaltyPoint,
+                        ],
+                      },
+                    ]}
+                  >
+                    <TransactionButton
+                      className="center mb-4 w-full rounded-md bg-blue-600 px-6 py-3 text-white shadow-md transition duration-300 hover:bg-blue-700"
+                      text="Attest"
+                    />
+                    <TransactionSponsor />
+                    <TransactionStatus>
+                      <TransactionStatusLabel />
+                      <TransactionStatusAction />
+                    </TransactionStatus>
+                  </Transaction>
+                </>
+              ) : (
+                <Button
+                  variant="primary"
+                  className="center mb-4 w-full rounded-md bg-blue-600 px-6 py-3 text-white shadow-md transition duration-300 hover:bg-blue-700"
+                  onClick={handleCreateProduct}
+                >
+                  Create Product
+                </Button>
+              )}
             </div>
           </div>
         </div>
