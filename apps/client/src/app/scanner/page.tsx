@@ -7,11 +7,14 @@ import { GrClose, GrGallery } from "react-icons/gr"
 import { MdQrCode2 } from "react-icons/md"
 import Rodal from "rodal"
 import { boundingBox, Scanner } from "@yudiel/react-qr-scanner"
+import { SendTx } from "@spheroid/dynamic"
+import { parseUnits } from "viem"
 
 import { truncateAddress } from "@/utils/truncateAddress"
 
 const ScannerPage = () => {
   const router = useRouter()
+  const { open } = SendTx.useSendBalance()
 
   const [data, setData] = useState<{
     stack: string | "spheroid"
@@ -20,6 +23,21 @@ const ScannerPage = () => {
     merchant: { name: string; logo?: string; address: string }
     products: { name: string; image?: string; price: number; quantity: number }[]
   } | null>(null)
+  const onCickSend = async () => {
+    if (!data) {
+      console.log("data is null")
+      return
+    }
+
+    try {
+      const tx = await open({
+        recipientAddress: data.merchant.address,
+        value: BigInt(data.total),
+      })
+    } catch (err) {
+      // Handle the promise rejection
+    }
+  }
 
   return (
     <>
@@ -171,6 +189,8 @@ const ScannerPage = () => {
                 </div>
               </div>
             )}
+
+            <button onClick={onCickSend}>Pay</button>
           </div>
         </div>
       </Rodal>
