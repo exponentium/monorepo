@@ -6,6 +6,7 @@ const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const address = searchParams.get("merchant")
+  const event = searchParams.get("event")
 
   if (address) {
     // Fetch a single merchant by ID
@@ -15,7 +16,16 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Failed to fetch merchant hooks" }, { status: 500 })
     }
 
-    return NextResponse.json({ merchant: data })
+    return NextResponse.json({ data })
+  } else if (event) {
+    // Fetch all hooks for a specific event
+    const { data, error } = await supabase.from("webhooks").select("*").eq("event", event)
+
+    if (error) {
+      return NextResponse.json({ error: "Failed to fetch event hooks" }, { status: 500 })
+    }
+
+    return NextResponse.json({ data })
   } else {
     // Fetch all hooks
     const { data, error } = await supabase.from("webhooks").select("*")
@@ -24,7 +34,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Failed to fetch merchants" }, { status: 500 })
     }
 
-    return NextResponse.json({ merchants: data })
+    return NextResponse.json({ data })
   }
 }
 
@@ -44,6 +54,7 @@ export async function POST(request: Request) {
     const { error } = await supabase.from("webhooks").insert({ merchant, event, url })
 
     if (error) {
+      console.error(error)
       return NextResponse.json({ error: "Failed to add webhook" }, { status: 500 })
     }
 
