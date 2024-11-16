@@ -3,7 +3,10 @@
 import React, { useEffect } from "react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
+
 import { CoinbaseProvider, ConnectWallet, Name, useAccount, Wallet } from "@spheroid/coinbase"
+import useReadMerchantRegistryContract from "@/hooks/useReadMerchantRegistryContract"
+import { toast } from "sonner"
 
 const Home = () => {
   return (
@@ -18,16 +21,23 @@ export default Home
 const HomeView = () => {
   const { address, isConnected } = useAccount()
 
+  const { data, isFetched } = useReadMerchantRegistryContract({
+    functionName: "isMerchantRegistered",
+    args: [address],
+  })
+
+  console.log("Fetched data:", address, data)
+
   useEffect(() => {
     if (isConnected && address) {
       // TODO: Check if the address is registered to the Merchant registry
       const isRegisteredWithMerchantRegistry = true
 
-      if (isRegisteredWithMerchantRegistry) {
-        redirect("/dashboard")
-      } else {
-        redirect("/onboarding")
-      }
+      //   if (isRegisteredWithMerchantRegistry) {
+      //     redirect("/dashboard")
+      //   } else {
+      //     redirect("/onboarding")
+      //   }
     }
   }, [address, isConnected])
 

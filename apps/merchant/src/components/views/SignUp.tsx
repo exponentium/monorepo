@@ -4,8 +4,11 @@ import React, { useState } from "react"
 import { toast } from "sonner"
 import { CornerConfetti } from "@spheroid/ts-particles"
 import { Button } from "@spheroid/ui"
+import { useWriteContract } from "@spheroid/coinbase"
+import { PROTOCOL_ABI, PROTOCOL_BASE_SEPOLIA } from "@spheroid/configuration"
 
 const Onboarding: React.FC = () => {
+  const { writeContract } = useWriteContract()
   const [activeStep, setActiveStep] = useState<number | null>(1)
 
   // Step 1: Merchant Information
@@ -113,12 +116,18 @@ const Onboarding: React.FC = () => {
   }
 
   const handleSubmit = async () => {
+    // TODO: Submit form data to the storage
     setIsSubmitting(true)
 
-    // TODO: Submit form data to the storage
-
     // TODO: Register the loyalty token
-
+    toast.success("Going towrite")
+    writeContract({
+      abi: PROTOCOL_ABI,
+      address: PROTOCOL_BASE_SEPOLIA,
+      functionName: "deployMerchantWithToken",
+      args: [merchantName, "cid_placeholder", tokenName, tokenSymbol],
+    })
+    toast.success("Done wwrite")
     // TODO: Add the data to SC
 
     // TODO: Redirect to dashboard
