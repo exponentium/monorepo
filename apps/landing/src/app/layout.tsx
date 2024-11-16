@@ -9,8 +9,7 @@ import "@spheroid/styles/src/styles/global.css"
 
 export const metadata: Metadata = {
   title: {
-    default: "Spheroid",
-    template: "%s | Spheroid",
+    absolute: "Home | Spheroid",
   },
   description: "",
   verification: {
