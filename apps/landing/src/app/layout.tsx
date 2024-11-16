@@ -1,6 +1,9 @@
 import React from "react"
 import { Metadata } from "next"
-import { Toaster } from "sonner"
+
+import Footer from "@/components/layout/Footer"
+
+import Navbar from "@/components/layout/Navbar"
 
 import "@spheroid/styles/src/styles/global.css"
 
@@ -20,12 +23,10 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: Readonly<IChildren>) => {
   return (
     <html lang="en">
-      <body className="min-h-screen">
-        <Toaster
-          position="bottom-right"
-          theme="system"
-        />
-        <>{children}</>
+      <body className="bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
+        <Navbar />
+        <div className="pt-16">{children}</div>
+        <Footer />
       </body>
     </html>
   )
