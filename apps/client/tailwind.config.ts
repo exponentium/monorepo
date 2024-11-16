@@ -9,39 +9,45 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: {
+          base: "#F9EFE5",
+        },
         whites: {
           wallet_modal_background: "#F8F9FB",
         },
-      },
-      keyframes: {
-        "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+        dark: {
+          0: "#1E2224",
+          1: "#16181A",
+          2: "#181B1D",
+          3: "#101213",
+          4: "#222629",
+          5: "#1F2224",
+          6: "#353333",
         },
-        "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+        light: {
+          0: "#FFFFFF",
+          1: "#FBFBFB",
+          2: "#F6F6F6",
+          3: "#F0EDF4",
         },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+        texts: {
+          0: "#EFEFEF",
+          1: "#E6E6E6",
+          2: "#D0D0D0",
+          3: "#909090",
+          4: "#4A4A4A",
+          5: "#BFBFBF",
+          6: "#7D7D7D",
+          7: "#9C9C9C",
+        },
+        customGray: {
+          0: "#2C3235",
+          1: "#808080",
+          2: "#1D1D1D",
+          3: "#BCBBBC",
+          4: "#D9D9D9",
+        },
       },
     },
   },
