@@ -8,15 +8,10 @@ import { MdQrCode2 } from "react-icons/md"
 import Rodal from "rodal"
 import { boundingBox, Scanner } from "@yudiel/react-qr-scanner"
 
+import { truncateAddress } from "@/utils/truncateAddress"
+
 const ScannerPage = () => {
   const router = useRouter()
-
-  const truncateAddress = (address: string) => {
-    if (!address) {
-      return ""
-    }
-    return `(${address.slice(0, 4)}...${address.slice(-4)})`
-  }
 
   const [data, setData] = useState<{
     orderId: string

@@ -2,9 +2,7 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { AiOutlineRobot } from "react-icons/ai"
-import { FaBell, FaGift, FaHome, FaTrophy, FaWallet } from "react-icons/fa"
 import { IoAlertCircle } from "react-icons/io5"
 import { toast } from "sonner"
 import { DynamicSdk } from "@spheroid/dynamic"
@@ -15,7 +13,6 @@ import Modal from "@/components/Modal"
 const HomeView = () => {
   const [receiverAddress, setReceiverAddress] = useState("")
   const [giftModal, setGiftModal] = useState(false)
-  const router = useRouter()
   const loggedIn = DynamicSdk.useIsLoggedIn()
   const [loyaltyPoint, setLoyaltyPoint] = useState<string>("0")
   const [error, setError] = useState("")
@@ -116,14 +113,14 @@ const HomeView = () => {
 
         <div className="mx-4 mt-4 grid grid-cols-3 rounded-lg bg-white shadow">
           <Link
-            href="/"
+            href="/history"
             className="center text-secondary h-full grow space-x-2 py-4 text-center transition-transform hover:scale-105"
           >
             <span>History</span>
           </Link>
           <Link
             href="/scanner"
-            className="center bg-accent h-full grow space-x-2 bg-black px-4 py-4 text-center text-white transition-transform hover:scale-105 active:scale-95"
+            className="center bg-accent h-full grow space-x-2 rounded-lg bg-black px-4 py-4 text-center text-white transition-transform hover:scale-105 active:scale-95"
           >
             <span>Scan</span>
           </Link>
@@ -156,30 +153,6 @@ const HomeView = () => {
             <p className="text-gray-500">No tokens available.</p>
           </div>
         </section>
-
-        <nav className="bg-secondary fixed bottom-0 left-0 right-0 py-4">
-          <div className="text-primary flex justify-around">
-            <button className="flex transform flex-col items-center transition-transform hover:scale-110">
-              <FaHome size={24} />
-              <span className="text-xs">Home</span>
-            </button>
-            <button className="flex transform flex-col items-center transition-transform hover:scale-110">
-              <FaTrophy size={24} />
-              <span className="text-xs">Rewards</span>
-            </button>
-            <button className="bg-accent flex transform flex-col items-center rounded-full p-2 text-white transition-transform hover:scale-110">
-              <FaGift size={24} />
-            </button>
-            <button className="flex transform flex-col items-center transition-transform hover:scale-110">
-              <FaWallet size={24} />
-              <span className="text-xs">Wallet</span>
-            </button>
-            <button className="flex transform flex-col items-center transition-transform hover:scale-110">
-              <FaBell size={24} />
-              <span className="text-xs">Updates</span>
-            </button>
-          </div>
-        </nav>
       </>
     )
   }
