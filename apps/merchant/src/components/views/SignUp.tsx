@@ -5,13 +5,21 @@ import { toast } from "sonner"
 import { redirect } from "next/navigation"
 import { CornerConfetti } from "@spheroid/ts-particles"
 import { Button } from "@spheroid/ui"
-import { useAccount, useWriteContract } from "@spheroid/coinbase"
+import {
+  Transaction,
+  TransactionButton,
+  TransactionSponsor,
+  TransactionStatus,
+  TransactionStatusAction,
+  TransactionStatusLabel,
+  Viem,
+} from "@spheroid/coinbase"
 import { BASE_SEPOLIA_CHAIN_ID, environment, PROTOCOL_ABI, PROTOCOL_BASE_SEPOLIA } from "@spheroid/configuration"
 import lighthouse from "@lighthouse-web3/sdk"
 
 const Onboarding: React.FC = () => {
-  const { writeContract } = useWriteContract()
   const [activeStep, setActiveStep] = useState<number | null>(1)
+  const [cid, setCid] = useState<string | null>(null)
 
   // Step 1: Merchant Information
   const [merchantName, setMerchantName] = useState("Ethglobal")
@@ -103,8 +111,55 @@ const Onboarding: React.FC = () => {
     }
   }
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (activeStep === 1 && validateStep1()) {
+      if (!environment.NEXT_PUBLIC_LIGHTHOUSE_API_KEY) {
+        toast.error("There was an error")
+        return
+      }
+
+      let imageUploadResponse = null
+      if (merchantImage) {
+        console.log("Uploading merchant image")
+        imageUploadResponse = await lighthouse.upload(
+          [merchantImage],
+          environment.NEXT_PUBLIC_LIGHTHOUSE_API_KEY,
+          undefined,
+          (progressData) => {
+            let percentageDone = (100 - (progressData?.progress ?? 0)).toFixed(2)
+            console.log("Image upload percentage: ", percentageDone)
+          }
+        )
+        console.log("Merchant image uploaded:", imageUploadResponse?.data.Hash)
+      }
+
+      // Register the loyalty token
+      const merchantData = {
+        name: merchantName,
+        description: merchantDescription,
+        image: imageUploadResponse?.data.Hash,
+        location: merchantLocation,
+        website: merchantWebsite,
+        social: {
+          twitter: merchantTwitter,
+          telegram: merchantTelegram,
+          discord: merchantDiscord,
+          instagram: merchantInstagram,
+          facebook: merchantFacebook,
+          farcaster: merchantFarcaster,
+          lens: merchantLens,
+        },
+      }
+
+      const responseText = await lighthouse.uploadText(
+        JSON.stringify(merchantData),
+        environment.NEXT_PUBLIC_LIGHTHOUSE_API_KEY,
+        `merchant-${merchantName}`
+      )
+
+      const cid = responseText.data
+
+      setCid(cid)
       setActiveStep(2)
     } else if (activeStep === 2 && validateStep2()) {
       setActiveStep(3)
@@ -115,91 +170,6 @@ const Onboarding: React.FC = () => {
     if (activeStep !== null) {
       setActiveStep(activeStep - 1)
     }
-  }
-
-  const handleSubmit = async () => {
-    // TODO: Submit form data to the storage
-    setIsSubmitting(true)
-
-    // if (!environment.NEXT_PUBLIC_LIGHTHOUSE_API_KEY) {
-    //   toast.error("There was an error")
-    //   return
-    // }
-    // console.log("Posting on lighthouse")
-
-    // // TODO: Upload merchant image to lighthouse
-    // let imageUploadResponse = null
-    // if (merchantImage) {
-    //   console.log("Uploading merchant image")
-    //   imageUploadResponse = await lighthouse.upload(
-    //     [merchantImage],
-    //     environment.NEXT_PUBLIC_LIGHTHOUSE_API_KEY,
-    //     undefined,
-    //     (progressData) => {
-    //       let percentageDone = (100 - (progressData?.progress ?? 0)).toFixed(2)
-    //       console.log("Image upload percentage: ", percentageDone)
-    //     }
-    //   )
-    //   console.log("Merchant image uploaded:", imageUploadResponse?.data.Hash)
-    // }
-
-    // // Register the loyalty token
-    // const merchantData = {
-    //   name: merchantName,
-    //   description: merchantDescription,
-    //   image: imageUploadResponse?.data.Hash,
-    //   location: merchantLocation,
-    //   website: merchantWebsite,
-    //   social: {
-    //     twitter: merchantTwitter,
-    //     telegram: merchantTelegram,
-    //     discord: merchantDiscord,
-    //     instagram: merchantInstagram,
-    //     facebook: merchantFacebook,
-    //     farcaster: merchantFarcaster,
-    //     lens: merchantLens,
-    //   },
-    // }
-
-    // console.log("Uploading merchant data")
-    // const responseText = await lighthouse.uploadText(
-    //   JSON.stringify(merchantData),
-    //   environment.NEXT_PUBLIC_LIGHTHOUSE_API_KEY,
-    //   `merchant-${merchantName}`
-    // )
-    // console.log("Merchant data uploaded:", responseText.data)
-
-    // const cid = responseText.data
-    // console.log("Registering merchant on blockchain with CID:", cid)
-
-    // console.log("Writing to Blockchain: ", { merchantName, cid, tokenName, tokenSymbol })
-    const data = {
-      merchantName: "Ethglobal",
-      cid: {
-        Name: "merchant-Ethglobal",
-        Hash: "bafkreiae3pbif3poppy6svdswv533nwdqvodgcgjxvnl3rjl2xvl6ohlaq",
-        Size: "331",
-      },
-      tokenName: "ETHGLOBAL",
-      tokenSymbol: "GLB",
-    }
-
-    writeContract({
-      abi: PROTOCOL_ABI,
-      address: PROTOCOL_BASE_SEPOLIA,
-      functionName: "deployMerchantWithToken",
-      //   args: [merchantName, cid, tokenName, tokenSymbol],
-      args: [merchantName, data.cid, tokenName, tokenSymbol],
-      chainId: BASE_SEPOLIA_CHAIN_ID,
-    })
-
-    // Redirect to dashboard
-    // setIsSubmitting(false)
-    // toast.success("Profile setup complete!")
-    // toast.success("Redirecting to base...")
-
-    // console.log("Redirecting to dashboard")
-    // redirect("/dashboard")
   }
 
   return (
@@ -791,12 +761,54 @@ const Onboarding: React.FC = () => {
                     >
                       Back
                     </Button>
-                    <Button
-                      variant="primary"
-                      onClick={handleSubmit}
-                    >
-                      {isSubmitting ? "Submitting..." : "Submit"}
-                    </Button>
+                    {cid ? (
+                      <Transaction
+                        onError={(error) => {
+                          console.error("Error", error)
+                          toast.error("An error occurred. Please try again.")
+                        }}
+                        onSuccess={(response) => {
+                          setIsSubmitting(true)
+                          setTimeout(() => {
+                            setIsSubmitting(false)
+                            toast.success("Profile setup complete!")
+                            toast.success("Redirecting to base...")
+                            console.log("Redirecting to dashboard")
+                            redirect("/dashboard")
+                          }, 1000)
+                        }}
+                        chainId={BASE_SEPOLIA_CHAIN_ID}
+                        contracts={[
+                          {
+                            address: PROTOCOL_BASE_SEPOLIA,
+                            abi: PROTOCOL_ABI,
+                            functionName: "deployMerchantWithToken",
+                            args: [
+                              Viem.pad(Viem.stringToHex(merchantName, { size: 32 })),
+                              Viem.pad(Viem.stringToHex(cid, { size: 32 })),
+                              tokenName,
+                              tokenSymbol,
+                            ],
+                          },
+                        ]}
+                      >
+                        <TransactionButton text="Submit" />
+                        <TransactionSponsor />
+                        <TransactionStatus>
+                          <TransactionStatusLabel />
+                          <TransactionStatusAction />
+                        </TransactionStatus>
+                      </Transaction>
+                    ) : (
+                      <>
+                        <Button
+                          variant="primary"
+                          disabled
+                        >
+                          Submit
+                        </Button>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

@@ -448,7 +448,7 @@ export const PROTOCOL_ABI = [
     name: "UnauthorizedMerchant",
     inputs: [],
   },
-]
+] as const
 export const MERCHANT_REGISTRY_ABI = [
   {
     type: "constructor",
@@ -1344,4 +1344,4 @@ export const MERCHANT_REGISTRY_ABI = [
     name: "ServiceDoesNotExist",
     inputs: [],
   },
-]
+] as const

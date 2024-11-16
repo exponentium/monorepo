@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { getConfig } from "./wagmi"
 
 // export * from "@coinbase/onchainkit"
+export * as Viem from "viem"
 export * from "@coinbase/onchainkit/api"
 export * from "@coinbase/onchainkit/transaction"
 export * from "@coinbase/onchainkit/core"
