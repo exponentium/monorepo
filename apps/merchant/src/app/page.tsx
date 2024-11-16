@@ -16,13 +16,20 @@ const Home = () => {
 export default Home
 
 const HomeView = () => {
-  const { isConnected } = useAccount()
+  const { address, isConnected } = useAccount()
 
   useEffect(() => {
-    if (isConnected) {
-      redirect("/dashboard")
+    if (isConnected && address) {
+      // TODO: Check if the address is registered to the Merchant registry
+      const isRegisteredWithMerchantRegistry = true
+
+      if (isRegisteredWithMerchantRegistry) {
+        redirect("/dashboard")
+      } else {
+        redirect("/onboarding")
+      }
     }
-  }, [isConnected])
+  }, [address, isConnected])
 
   return (
     <div className="flex min-h-screen flex-col md:flex-row">

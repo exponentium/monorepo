@@ -30,6 +30,7 @@
 		"@spheroid/coinbase": "workspace:^",
 		"@spheroid/configuration": "workspace:*",
 		"@spheroid/styles": "workspace:*",
+		"@spheroid/ts-particles": "workspace:^",
 		"@spheroid/ui": "workspace:*",
 		"@t3-oss/env-nextjs": "^0.11.1",
 		"@tanstack/react-query": "^4.35.3",
