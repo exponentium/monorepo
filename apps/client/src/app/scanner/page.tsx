@@ -19,36 +19,12 @@ const ScannerPage = () => {
   }
 
   const [data, setData] = useState<{
+    stack: string | "spheroid"
     orderId: string
-    merchantAddress: string
-    merchantName: string
     total: number
-    products: { name: string; price: number; quantity: number }[]
-    //   } | null>(null)
-  } | null>({
-    orderId: "123456",
-    merchantAddress: "0xE2B48E911562a221619533a5463975Fdd92E7fC7",
-    merchantName: "Madhav",
-    products: [
-      {
-        name: "Product 1",
-        price: 100,
-        quantity: 1,
-      },
-      {
-        name: "Product 2",
-        price: 200,
-        quantity: 2,
-      },
-    ],
-    total: 500,
-  })
-
-  //   useEffect(() => {
-  //     const rawData = data ? JSON.parse(data) : null
-  //     if (rawData && rawData.rawValue && rawData.rawValue !== "") {
-  //     }
-  //   }, [data])
+    merchant: { name: string; logo?: string; address: string }
+    products: { name: string; image?: string; price: number; quantity: number }[]
+  } | null>(null)
 
   return (
     <>
@@ -136,37 +112,67 @@ const ScannerPage = () => {
         <div className="fixed inset-0 !z-[65] flex flex-col justify-end rounded-2xl p-0 md:items-center md:justify-center md:p-4">
           <div className="relative !z-[60] flex min-w-[380px] flex-col items-center rounded-t-xl bg-black px-5 py-6">
             <div className="absolute left-1/2 top-2 mb-2 h-1 w-10 -translate-x-1/2 transform rounded-full bg-gray-500" />
-            <h2 className="text-texts-1 mb-1 text-lg font-semibold">Scan QR code of your merchant</h2>
+            <h2 className="text-texts-1 mb-1 text-lg font-semibold">
+              {data ? `Pay ${truncateAddress(data.merchant.name)}` : "Scan QR code of your merchant"}
+            </h2>
             <p className="text-texts-6 text-sm">Instant • Secure • Easy</p>
 
             {/* Parsed data */}
             {data && (
-              <div className="mt-4 flex w-full flex-col gap-2 text-white">
-                <div className="flex flex-col items-start">
-                  <span className="text-xs font-normal italic">Pay to</span>
-                  <div className="flex flex-row items-center gap-1 text-sm font-medium">
-                    <span>{data.merchantName}</span>
-                    <span>{truncateAddress(data.merchantAddress)}</span>
+              <div className="mt-4 w-full max-w-md rounded-lg bg-white p-6 shadow-md">
+                {/* Pay to Section */}
+                <div className="mb-6">
+                  <div className="flex items-center text-sm font-semibold text-gray-700">
+                    <span>Pay to:</span>
+                  </div>
+                  <div className="mt-2 flex items-center">
+                    {/* Optional: Merchant Logo */}
+                    {data.merchant.logo && (
+                      <img
+                        src={data.merchant.logo}
+                        alt="Merchant Logo"
+                        className="mr-3 h-10 w-10 rounded-full object-cover"
+                      />
+                    )}
+                    <div>
+                      <h2 className="text-xl font-bold text-gray-900">{data.merchant.name}</h2>
+                      <p className="text-sm text-gray-500">{truncateAddress(data.merchant.address)}</p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex w-full flex-col items-start">
-                  <span className="text-xs font-normal italic">Products</span>
-                  {data.products.map((product) => (
-                    <div
-                      className="flex w-full flex-row items-center justify-between"
-                      key={product.quantity}
-                    >
-                      <span className="text-xs font-medium">{product.name}</span>
-                      <span className="text-xs font-normal italic text-gray-200">
-                        {product.price} * {product.quantity}
-                      </span>
-                    </div>
-                  ))}
+                {/* Products Section */}
+                <div className="mb-6">
+                  <div className="flex items-center text-sm font-semibold text-gray-700">
+                    <span>Products:</span>
+                  </div>
+                  <div className="mt-2">
+                    {data.products.map((product, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between border-b py-3 last:border-b-0"
+                      >
+                        <div className="flex items-center">
+                          {/* Optional: Product Image */}
+                          {product.image && (
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="mr-3 h-8 w-8 rounded-md object-cover"
+                            />
+                          )}
+                          <span className="text-gray-800">{product.name}</span>
+                        </div>
+                        <div className="text-gray-600">
+                          {product.quantity} x ${product.price.toFixed(2)}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <hr />
-                <div className="flex w-full flex-row items-center justify-between">
-                  <span className="text-xs font-normal">Total:</span>
-                  <span className="text-xs font-normal italic text-gray-200">{data.total}</span>
+                {/* Total Section */}
+                <div className="flex items-center justify-between border-t pt-4">
+                  <span className="text-lg font-semibold text-gray-900">Total:</span>
+                  <span className="text-lg font-bold text-gray-900">${data.total.toFixed(2)}</span>
                 </div>
               </div>
             )}
