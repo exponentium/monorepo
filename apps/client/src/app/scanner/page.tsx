@@ -11,12 +11,38 @@ import { boundingBox, Scanner } from "@yudiel/react-qr-scanner"
 const ScannerPage = () => {
   const router = useRouter()
 
+  const truncateAddress = (address: string) => {
+    if (!address) {
+      return ""
+    }
+    return `(${address.slice(0, 4)}...${address.slice(-4)})`
+  }
+
   const [data, setData] = useState<{
     orderId: string
     merchantAddress: string
+    merchantName: string
     total: number
     products: { name: string; price: number; quantity: number }[]
-  } | null>(null)
+    //   } | null>(null)
+  } | null>({
+    orderId: "123456",
+    merchantAddress: "0xE2B48E911562a221619533a5463975Fdd92E7fC7",
+    merchantName: "Madhav",
+    products: [
+      {
+        name: "Product 1",
+        price: 100,
+        quantity: 1,
+      },
+      {
+        name: "Product 2",
+        price: 200,
+        quantity: 2,
+      },
+    ],
+    total: 500,
+  })
 
   //   useEffect(() => {
   //     const rawData = data ? JSON.parse(data) : null
@@ -108,25 +134,39 @@ const ScannerPage = () => {
         closeOnEsc
       >
         <div className="fixed inset-0 !z-[65] flex flex-col justify-end rounded-2xl p-0 md:items-center md:justify-center md:p-4">
-          <div className="bg-dark-6 relative !z-[60] flex min-w-[380px] flex-col items-center rounded-t-xl px-5 py-6">
+          <div className="relative !z-[60] flex min-w-[380px] flex-col items-center rounded-t-xl bg-black px-5 py-6">
             <div className="absolute left-1/2 top-2 mb-2 h-1 w-10 -translate-x-1/2 transform rounded-full bg-gray-500" />
             <h2 className="text-texts-1 mb-1 text-lg font-semibold">Scan QR code of your merchant</h2>
             <p className="text-texts-6 text-sm">Instant • Secure • Easy</p>
 
             {/* Parsed data */}
             {data && (
-              <div className="mt-4 w-full">
-                <div className="mb-2 flex items-center justify-between">
-                  <h3 className="text-texts-1 font-semibold">{data.merchantAddress}</h3>
-                  <p className="text-texts-6">Merchant name</p>
+              <div className="mt-4 flex w-full flex-col gap-2 text-white">
+                <div className="flex flex-col items-start">
+                  <span className="text-xs font-normal italic">Pay to</span>
+                  <div className="flex flex-row items-center gap-1 text-sm font-medium">
+                    <span>{data.merchantName}</span>
+                    <span>{truncateAddress(data.merchantAddress)}</span>
+                  </div>
                 </div>
-                <div className="mb-2 flex items-center justify-between">
-                  <h3 className="text-texts-1 font-semibold">{data.total}</h3>
-                  <p className="text-texts-6">Total amount</p>
+                <div className="flex w-full flex-col items-start">
+                  <span className="text-xs font-normal italic">Products</span>
+                  {data.products.map((product) => (
+                    <div
+                      className="flex w-full flex-row items-center justify-between"
+                      key={product.quantity}
+                    >
+                      <span className="text-xs font-medium">{product.name}</span>
+                      <span className="text-xs font-normal italic text-gray-200">
+                        {product.price} * {product.quantity}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-                <div className="mb-2 flex items-center justify-between">
-                  <h3 className="text-texts-1 font-semibold">{JSON.stringify(data.products)}</h3>
-                  <p className="text-texts-6">Items list</p>
+                <hr />
+                <div className="flex w-full flex-row items-center justify-between">
+                  <span className="text-xs font-normal">Total:</span>
+                  <span className="text-xs font-normal italic text-gray-200">{data.total}</span>
                 </div>
               </div>
             )}

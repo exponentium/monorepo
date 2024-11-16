@@ -1,30 +1,119 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { AiOutlineRobot } from "react-icons/ai"
 import { FaBell, FaGift, FaHome, FaTrophy, FaWallet } from "react-icons/fa"
+import { IoAlertCircle } from "react-icons/io5"
+import { toast } from "sonner"
 import { DynamicSdk } from "@spheroid/dynamic"
+import { Button } from "@spheroid/ui"
+
+import Modal from "@/components/Modal"
 
 const HomeView = () => {
+  const [receiverAddress, setReceiverAddress] = useState("")
+  const [giftModal, setGiftModal] = useState(false)
   const router = useRouter()
   const loggedIn = DynamicSdk.useIsLoggedIn()
+  const [loyaltyPoint, setLoyaltyPoint] = useState<string>("0")
+  const [error, setError] = useState("")
+
+  const ethereumAddressRegex = /^0x[a-fA-F0-9]{40}$/
+
+  const validateGiftDetails = () => {
+    if (!receiverAddress) {
+      setError("Please enter a contract address.")
+      toast.error("Please enter a contract address.", {
+        icon: <IoAlertCircle className="text-lg" />,
+      })
+      return false
+    }
+
+    if (!ethereumAddressRegex.test(receiverAddress)) {
+      const errorMessage =
+        "Invalid Ethereum contract address format. Must start with '0x' followed by 40 hexadecimal characters."
+      setError(errorMessage)
+      toast.error(errorMessage, {
+        icon: <IoAlertCircle className="text-lg" />,
+      })
+      return false
+    }
+
+    if (!loyaltyPoint || parseInt(loyaltyPoint, 10) <= 0) {
+      const errorMessage = "Please enter a valid number of loyalty points."
+      setError(errorMessage)
+      toast.error(errorMessage, {
+        icon: <IoAlertCircle className="text-lg" />,
+      })
+      return false
+    }
+
+    setError("")
+    return true
+  }
+
+  const handleGift = () => {
+    if (validateGiftDetails()) {
+      toast.success("Gift details are valid! Proceeding with the transaction...", {
+        description: `Sending ${loyaltyPoint} points to ${receiverAddress}`,
+      })
+      // Add your logic to send the gift
+    }
+  }
+
+  const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setReceiverAddress(event.target.value)
+  }
+
+  const handleLoyaltyPointChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value
+    if (value === "" || /^[0-9]*$/.test(value)) {
+      setLoyaltyPoint(value)
+    }
+  }
 
   if (loggedIn) {
     return (
       <>
-        {/* Header */}
+        <Modal
+          isOpen={giftModal}
+          onClose={() => setGiftModal(false)}
+          title="Gift Loyalty Points"
+        >
+          <div className="flex w-full flex-col gap-2">
+            <div className="flex flex-col items-start gap-2 font-normal text-gray-500">
+              <span className="text-base">Send to *</span>
+              <input
+                type="text"
+                value={receiverAddress}
+                onChange={handleAddressChange}
+                className="flex w-full rounded-lg border border-gray-400 p-2"
+                placeholder="0x..."
+              />
+            </div>
+            <div className="flex flex-col items-start gap-2 font-normal text-gray-500">
+              <span className="text-base">Loyalty Points *</span>
+              <input
+                type="text"
+                value={loyaltyPoint}
+                onChange={handleLoyaltyPointChange}
+                className="flex w-full rounded-lg border border-gray-400 p-2"
+                placeholder="0"
+              />
+            </div>
+            <Button onClick={() => handleGift()}>Gift</Button>
+          </div>
+        </Modal>
         <header className="bg-secondary text-primary flex items-center justify-between px-4 py-4">
           <h1 className="text-xl font-semibold">Wallet</h1>
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-row items-center gap-2 rounded-full bg-black bg-opacity-10 px-3 py-1">
             <span className="h-2 w-2 rounded-full bg-green-500"></span>
             <span className="font-medium">Spheroid</span>
-            <button className="text-primary transform transition-transform hover:rotate-180">&#9662;</button>
           </div>
         </header>
 
-        {/* Tab Bar */}
         <div className="mx-4 mt-4 grid grid-cols-3 rounded-lg bg-white shadow">
           <Link
             href="/"
@@ -38,15 +127,14 @@ const HomeView = () => {
           >
             <span>Scan</span>
           </Link>
-          <Link
-            href="/"
+          <button
+            onClick={() => setGiftModal(true)}
             className="center text-secondary h-full grow space-x-2 py-4 text-center transition-transform hover:scale-105"
           >
             <span>Transfer</span>
-          </Link>
+          </button>
         </div>
 
-        {/* Recent Activities */}
         <section className="mx-4 mt-6">
           <div className="flex items-center justify-between">
             <h2 className="text-secondary text-lg font-semibold">Recent Activities</h2>
@@ -62,8 +150,6 @@ const HomeView = () => {
             <p className="text-gray-500">No recent claims.</p>
           </div>
         </section>
-
-        {/* Tokens */}
         <section className="mx-4 mt-6">
           <h2 className="text-secondary text-lg font-semibold">Tokens</h2>
           <div className="mt-4 transform rounded-lg bg-gray-100 p-4 transition-all hover:scale-105">
@@ -71,7 +157,6 @@ const HomeView = () => {
           </div>
         </section>
 
-        {/* Bottom Navigation */}
         <nav className="bg-secondary fixed bottom-0 left-0 right-0 py-4">
           <div className="text-primary flex justify-around">
             <button className="flex transform flex-col items-center transition-transform hover:scale-110">
