@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { AiOutlineDashboard } from "react-icons/ai"
 import { BiSolidCollection } from "react-icons/bi"
 import { FaUsers } from "react-icons/fa"
+import { MdOutlineWebhook } from "react-icons/md"
 
 import { SideMenuContext } from "@/context/SideMenuContext"
 
@@ -28,6 +29,11 @@ const SideMenu: React.FC = () => {
       name: "Collections",
       href: "/collections",
       icon: <BiSolidCollection size={24} />,
+    },
+    {
+      name: "Webhooks",
+      href: "/dashboard/webhooks",
+      icon: <MdOutlineWebhook size={24} />,
     },
   ]
 

@@ -2,8 +2,8 @@
 export const BASE_SEPOLIA_CHAIN_ID = 84532
 
 // Contract addresses
-export const PROTOCOL_BASE_SEPOLIA = "0xb6206993866f70a66f8649e0a7fe8e934eed34bf"
-export const MERCHANT_REGISTRY_BASE_SEPOLIA = "0x229cbcb023db10ecbd07323976f2dac3705dd530"
+export const PROTOCOL_BASE_SEPOLIA = "0xD65725Bf3b78B70653f8290B7FA3AFf773D62b1e"
+export const MERCHANT_REGISTRY_BASE_SEPOLIA = "0x088033045EeeC32c6a181A3bf5aFc66f75254523"
 
 // ABIs
 export const PROTOCOL_ABI = [
@@ -448,7 +448,7 @@ export const PROTOCOL_ABI = [
     name: "UnauthorizedMerchant",
     inputs: [],
   },
-]
+] as const
 export const MERCHANT_REGISTRY_ABI = [
   {
     type: "constructor",
@@ -1344,4 +1344,4 @@ export const MERCHANT_REGISTRY_ABI = [
     name: "ServiceDoesNotExist",
     inputs: [],
   },
-]
+] as const
