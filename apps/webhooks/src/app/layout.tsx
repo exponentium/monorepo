@@ -1,8 +1,6 @@
 import React from "react"
 import { Metadata } from "next"
 
-import "@spheroid/styles/src/styles/global.css"
-
 export const metadata: Metadata = {
   title: {
     absolute: "Webhooks | Spheroid",
