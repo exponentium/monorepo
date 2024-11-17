@@ -7,24 +7,32 @@ import { toast } from "sonner"
 import { v4 as uuidv4 } from "uuid"
 import { Button } from "@spheroid/ui"
 import { useAccount } from "@spheroid/coinbase"
+import useReadMerchantRegistryContract from "@/hooks/useReadMerchantRegistryContract"
 
 type Product = {
   id: number
   name: string
+  image: string
   price: number
 }
-
-// TODO: Actual data from curvegrid read
-const predefinedProducts: Product[] = [
-  { id: 1, name: "Product A", price: 10.0 },
-  { id: 2, name: "Product B", price: 15.5 },
-  { id: 3, name: "Product C", price: 7.25 },
-]
 
 const Order: React.FC = () => {
   const { address } = useAccount()
   const [orderItems, setOrderItems] = useState<{ productId: number; quantity: number }[]>([])
   const [qrCode, setQrCode] = useState<string | null>(null)
+
+  const { data: products } = useReadMerchantRegistryContract({
+    functionName: "getMerchantServices",
+    args: [address],
+  })
+
+  const predefinedProducts: Product[] =
+    products?.map((product, index) => ({
+      id: index,
+      name: product.name,
+      image: "",
+      price: product.mintRatio,
+    })) || []
 
   const addOrderItem = () => {
     setOrderItems([...orderItems, { productId: predefinedProducts[0]?.id ?? 0, quantity: 1 }])
