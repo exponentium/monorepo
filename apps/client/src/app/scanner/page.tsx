@@ -111,13 +111,13 @@ const ScannerPage = () => {
       const amount = ethers.parseUnits("1", 6) // 1 USDC
       const servicesAvailed = [1, 2] // Array of 1 and 2 as requested
 
-      const gasEstimate = await contract.verifyAndPayMerchant.estimateGas(merchant, amount, servicesAvailed)
-      const gasLimit = (gasEstimate * BigInt(120)) / BigInt(100)
+    //   const gasEstimate = await contract.verifyAndPayMerchant.estimateGas(merchant, amount, servicesAvailed)
+    //   const gasLimit = (gasEstimate * BigInt(120)) / BigInt(100)
 
       const tx = await contract.verifyAndPayMerchant(merchant, amount, servicesAvailed, {
-        gasLimit,
-        maxFeePerGas: ethers.parseUnits("50", "gwei"),
-        maxPriorityFeePerGas: ethers.parseUnits("2", "gwei"),
+        // gasLimit,
+        // maxFeePerGas: ethers.parseUnits("50", "gwei"),
+        // maxPriorityFeePerGas: ethers.parseUnits("2", "gwei"),
       })
 
       console.log("Transaction sent:", tx.hash)
