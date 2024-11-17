@@ -1,6 +1,6 @@
-# 🌐 Spheroid
+# 🌐 Spheroid: Payment 3.0
 
-A decentralized modern payment protocol with loyalty tokens to seamlessly onboard web2 users to web3.
+Spheroid is an onchain payment platform and loyalty protocol designed to make it easy for businesses to accept cryptocurrency payments and distribute loyalty onchain
 
 ## ✨ Features
 
